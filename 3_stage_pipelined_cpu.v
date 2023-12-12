@@ -16,7 +16,6 @@
 `define XORI  4'b1111
 
 
-
 module final_top (
     input clk,
     input rst, // active high
@@ -188,8 +187,8 @@ module alu (
             `AND, `ANDI: result = operand1 & operand2;
             `OR, `ORI: result = operand1 | operand2;
             `XOR, `XORI: result = operand1 ^ operand2;
-            `SHL: {carry_out, result} = operand1 << operand2;
-            `SHR: {carry_out, result} = operand1 >> operand2;
+            `SHL: result = operand1 << operand2;
+            `SHR: result = operand1 >> operand2;
             `SHRA: result = $signed(operand1) >>> operand2;
             `ADDI: result = operand1 + operand2; // operand2 is immediate in this case
             `SUBI: result = operand1 - operand2; // operand2 is immediate
