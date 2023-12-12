@@ -16,7 +16,7 @@ Assembly
 > EXPECTED addr: `a6c7`
 > EXPECTED we: `0`
 > EXPECTED out_reg: `0000`
-> EXPECTED zero: `0`
+> EXPECTED zero: `1`
 > EXPECTED carry: `0`
 
 10110000000000100101011101100011
@@ -35,7 +35,7 @@ Assembly
 > EXPECTED addr: `1139`
 > EXPECTED we: `1`
 > EXPECTED out_reg: `0000`
-> EXPECTED zero: `0`
+> EXPECTED zero: `1`
 > EXPECTED carry: `0`
 
 10110000000010000110000001010000
@@ -55,7 +55,7 @@ Assembly
 > EXPECTED addr: `1139`
 > EXPECTED we: `0`
 > EXPECTED out_reg: `0000`
-> EXPECTED zero: `0`
+> EXPECTED zero: `1`
 > EXPECTED carry: `0`
 
 10110000000011111100100110100101
