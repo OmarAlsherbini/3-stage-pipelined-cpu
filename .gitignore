@@ -2,3 +2,5 @@ work/
 *.mpf
 *.mti
 *.bak
+modelsim.ini
+vsim.wlf

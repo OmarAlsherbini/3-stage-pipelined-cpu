@@ -9,18 +9,9 @@ module final_top_tb;
     wire [15:0] data_in; // Connected to data_out of SRAM
     reg [15:0] data_out_expected, out_reg_expected, addr_expected;
     reg we_expected, zero_expected, carry_expected;
-    reg [15:0] data_out_d, addr_d, out_reg_d;
-    reg we_d, zero_d, carry_d;
     
     wire [15:0] data_out, addr, out_reg;
     wire we, zero, carry;
-
-    assign data_out = data_out_d;
-    assign addr = addr_d;
-    assign out_reg = out_reg_d;
-    assign we = we_d;
-    assign zero = zero_d;
-    assign carry = carry_d;
 
     // Instantiate the final_top and sram modules
 
@@ -58,11 +49,6 @@ module final_top_tb;
         end
     end
 
-    initial begin
-        rst = 1'b0;
-        #80; // Assert reset for 4 cycles
-        rst = 1'b0;
-    end
 
     // Testbench logic
     initial begin
@@ -77,7 +63,10 @@ module final_top_tb;
 
         total_tests = 0;
         failed_tests = 0;
-        #80
+        
+        rst = 1'b1;
+        #80; // Assert reset for 4 cycles
+        rst = 1'b0;
 
 
         // Run 16 tests, each in 4 phases over 10 clock cycles
@@ -85,12 +74,12 @@ module final_top_tb;
             // Phases 1 and 2: Prepare registers (cycles 1-6)
             for (i = 1; i <= 2; i = i+1) begin
                 scan_file = $fscanf(instr_file, "%b\n", instruction);
-                #60; // 3 clock cycles per instruction
+                #80; // 3 clock cycles per instruction and not caring for hazards
             end
 
             // Phase 3: Execute actual instruction (cycles 7-9)
             scan_file = $fscanf(instr_file, "%b\n", instruction);
-            #60; // 3 clock cycles
+            #80; // 3 clock cycles and not caring for hazards
 
             // Phase 4: Evaluate outputs (cycle 10)
             total_tests = total_tests + 1;
@@ -108,7 +97,7 @@ module final_top_tb;
             check_and_report_bit(zero, zero_expected, instruction, "Zero");
             check_and_report_bit(carry, carry_expected, instruction, "Carry");
 
-            #20; // Move to the next test
+            #40; // Move to the next test
         end
 
         $fclose(instr_file);
@@ -120,8 +109,8 @@ module final_top_tb;
         $fclose(carry_file);
 
         // Summary
-        $display("Total Tests: %d, Failed Tests: %d", total_tests, failed_tests);
-        $stop;
+        $display("Total Tests: %d, Total Checks: %d, Failed Checks: %d", total_tests, total_tests*6, failed_tests);
+        //$stop;
     end
 
     // Tasks for checking results and reporting errors
