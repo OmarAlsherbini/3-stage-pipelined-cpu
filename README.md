@@ -249,7 +249,7 @@ Assembly
 
 > 11001110010001111001000101000000
 > EXPECTED data_out: `f0f0`
-> EXPECTED addr: `9120`
+> EXPECTED addr: `9140`
 > EXPECTED we: `0`
 > EXPECTED out_reg: `5fb0`
 > EXPECTED zero: `0`
